@@ -1,5 +1,6 @@
 function surf_nerves(dim,X,Y,z_multiplier)
-% function for drawing 3D visualization of nerves
+% Helping function for drawing 3D visualization of nerves for  
+% nerve_tracking_gui.
 
 hold on
 Z = (1:size(X,3))*z_multiplier;

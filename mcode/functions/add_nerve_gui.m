@@ -1,4 +1,6 @@
 function S = add_nerve_gui(fig,N)
+% Helping gui for adding a new nerve in a drawing window when using 
+% nerve_tracking_gui.
 
 t = 0:2*pi/N:2*pi*(1-1/N); % radial parameter
 cost = cos(t);

@@ -1,14 +1,25 @@
 function nerve_tracking_gui(data,varargin)
 %NERVE_TRACKING_GUI   GUI for tracking nerves in volumetric data
-%   NERVE_TRACKING_GUI(DATA_FOLDER)
-%   NERVE_TRACKING_GUI(DATA_FOLDER,X,Y)
-%       Input:
-%           DATA_FOLDER, folder containing tif images
-%           XY (optional) are previously tracked and saved nerves from GUI
-%               This is an array of size
-%               NR_POINTS-by-NR_NERVES-by-NR_SLICES-by_2
-%               containing x and y coordinates of the nerve outlines
-%   Author: vand@dtu.dk, 2019
+%   NERVE_TRACKING_GUI(DATA)
+%   NERVE_TRACKING_GUI(DATA,Name,Value) sets one or more properties using 
+%           name-value pair arguments. Keyboard shortcuts: add [a], 
+%           change nerve [n], edit [e], fit [f], propagate [p], copy [c], 
+%           delete [D], save [s], boundry [b]       
+%       DATA, volumetric data. This may be a name of a folder containing
+%               tif images, a name of the tiff file containing stacked tif
+%               stacked images, or a 3D array.
+%       Name-Value pairs:
+%           'tracks', previously tracked and saved nerves from GUI. This is 
+%               an array of size NR_POINTS-by-NR_NERVES-by-NR_SLICES-by_2
+%               containing x and y coordinates of the nerve outlines.
+%           'nr_points'
+%           'z_multiplier'
+%           'zoom_width'
+%           'regularization_propagation'
+%           'regularization_drag'
+%           'range'           
+%           
+%   Author: vand@dtu.dk, 2019, 2020
 
 
 % PARSING INPUTS

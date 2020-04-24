@@ -1,6 +1,7 @@
 function [X,Y] = fix_snake_twisting(X,Y)
 % Shifts points along snake curves to prevent twisting of the mesh faces 
-% arond the nerve. Function written to work on all nerves
+% arond the nerve. Function written to work on all nerves.
+% Used in nerve_tracking_gui just before saving the result.
 
 for n = 1:size(X,2) % for each nerve
     Xn = squeeze(X(:,n,:)); % Xn is nr_points-by-nr_slices

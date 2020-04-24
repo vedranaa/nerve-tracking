@@ -1,4 +1,6 @@
 function S = edit_nerve_gui(fig,S,regularization_drag)
+% Helping gui for editing a new nerve in a drawing window when using 
+% nerve_tracking_gui.
 
 k = 1/5; % a parameter determining the fraction of snake points which moves when one point is dragged
 i = []; % point currently being dragged
