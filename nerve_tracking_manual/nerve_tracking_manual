@@ -1,0 +1,25 @@
+\documentclass[paper=a4, fontsize=10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{fullpage}
+\usepackage{enumitem}
+\setlist{nosep} % for compact lists
+\usepackage{hyperref}
+
+%\newlength{\extralength}\setlength{\extralength}{2cm} % if more space is needed
+%\addtolength{\textheight}{\extralength}
+%\addtolength{\voffset}{-0.5\extralength}
+
+\begin{document}
+	\begin{Large}\hrule height 1pt
+		\begin{tabular}{@{}l@{}} Exercise number \\ Exercise title\end{tabular}\hspace{\stretch{1}}
+		\begin{tabular}{@{}r@{}} Course \\ Version\end{tabular}\hrule	
+	\end{Large}\par\vspace{\baselineskip}
+	
+	\vspace{\stretch{1}}\noindent vand at dtu dot dk, year
+\end{document}
