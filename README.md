@@ -4,7 +4,7 @@ Nerve tracking GUI is used for tracking nerves in volumetric data. The method is
 
 Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window, see the the screenshot below. The results are visualized in the 3D visualization window, and can be exported and saved as .obj files.
 
-<img src="/images/peripheral_nerve_screenshot.png" width="700">
+<img src="/images/peripheral_nerve_screenshot.png" width="500">
 
 The basic use of the code is: `nerve_tracking_gui(data)`. The format of `data`, and  optional inputs are explained in the help text in the code.
 
@@ -35,7 +35,7 @@ Start by getting an overview of the data by navigating through all slices. To ad
 
 ## Example data
 
-Example data for running the gui, and the example scrips, will be made available later. For now, write to vand@dtu.dk for access. In the mean time, to try the gui you can use `mri` data available in MATLAB. Note that this is far from optimal data for gui, since all background is masked to be fully black (0) and structures are not tubular. Still, you can get a reasonable segmentation of the head. 
+Example data for running the gui, and the example scrips, will be made available later. For now, write to vand@dtu.dk for access. In the mean time, to try the gui you can use `mri` data available in MATLAB. Note that this is far from optimal data for gui, since all background is masked to be fully black (0) and structures are not tubular. 
 
 ```matlab
 %% a test with matlabs build-in data
@@ -43,3 +43,11 @@ load mri
 V = squeeze(D(:,:,1,:));
 nerve_tracking_gui(V)
 ```
+Still, you can get a reasonable segmentation of the head, sell bellow, but that required slightly tweaking some parameters.
+
+```matlab
+%% chaniging regularization, range and number of points
+nerve_tracking_gui(V, 'regularization_propagation', [0.1,0.5],...
+    'range', -15:15, 'nr_points', 180)
+```
+<img src="/images/peripheral_nerve_screenshot.png" width="500">
