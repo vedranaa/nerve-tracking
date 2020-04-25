@@ -50,4 +50,4 @@ Still, you can get a reasonable segmentation of the head, sell bellow, but that 
 nerve_tracking_gui(V, 'regularization_propagation', [0.1,0.5],...
     'range', -15:15, 'nr_points', 180)
 ```
-<img src="/images/peripheral_nerve_screenshot.png" width="500">
+<img src="/images/mri_screenshot.png" width="500">
