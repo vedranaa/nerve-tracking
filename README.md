@@ -4,4 +4,4 @@ Nerve tracking GUI is used for tracking nerves in volumetric data. The method is
 
 Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window, see the image of the screenshot. The results are visualized in the 3D visualization window, and can be exported and saved as .obj files.
 
-![Screenshot](/images/mouse_screenshot.png)
+![Screenshot](/images/peripheral_nerve_screenshot.png)
