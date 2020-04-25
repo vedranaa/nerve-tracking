@@ -23,7 +23,7 @@
 	
 Nerve tracking GUI is used for tracking nerves in volumetric data. The method is the same as used in the paper \emph{Three-dimensional architecture of human diabetic peripheral nerves revealed by X-ray phase contrast holographic nanotomography} by Dahlin \emph{et al.}, Scientific Reports 2020.
 
-Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window (see Fig.~\ref{fig:guiscreenshot}). The result can be exported and saved as .obj files (see Fig.~\ref{fig:mousenerves}).
+Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window (see Fig.~\ref{fig:guiscreenshot}). The results are visualized in the 3D visualization window, and can be exported and saved as .obj files (see Fig.~\ref{fig:mousenerves}).
 
 The basic use of the code is: \texttt{nerve\_tracking\_gui(data)}. The format of \texttt{data} and  optional inputs are explained in the help text in the code.
 
@@ -61,11 +61,11 @@ Start by getting an overview of the data by navigating through all slices. To ad
 	
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.9\linewidth]{images/GUI_Screenshot}
+		\includegraphics[width=0.9\linewidth]{../images/mouse_nerve_screenshot}
 		\caption{A screenshot of the nerve tracking GUI in action. On left the oveview window, on right the drawing window and the 3D visualization window.}
 		\label{fig:guiscreenshot}
 		\vspace{3\baselineskip}
-		\includegraphics[width=\linewidth]{images/EM_mouse_meshes_screenshot}
+		\includegraphics[width=\linewidth]{../images/EM_mouse_meshes_screenshot}
 		\caption{An outcome of nerve tracking, in this case saved as .obj file and opened in another program (MeshLab) for the visualization.}
 		\label{fig:mousenerves}
 	\end{figure}
