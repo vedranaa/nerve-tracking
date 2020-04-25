@@ -10,11 +10,11 @@ The basic use of the code is: `nerve_tracking_gui(data)`. The format of `data`, 
 
 Keyboard input
  - Navigation:
-		- (Arrow up) One slice up.		
+  - (Arrow up) One slice up.		
   - (Arrow down) One slice down.
-		- (Arrow right) 10 slices up.
-		- (Arrow left) 10 slices down.
-		- (Page up) 50 slices up.
-		- (Page down) 50 slices down.
-		- (Home) To the first slice.
-		- (End) To the last slice.
+  - (Arrow right) 10 slices up.
+  - (Arrow left) 10 slices down.
+  - (Page up) 50 slices up.
+  - (Page down) 50 slices down.
+  - (Home) To the first slice.
+  - (End) To the last slice.
