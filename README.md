@@ -40,5 +40,6 @@ Example data for running the gui, and the example scrips, will be made available
 ```matlab
 %% a test with matlabs build-in data
 load mri
-nerve_tracking_gui(squeeze(D(:,:,1,:)))
+V = squeeze(D(:,:,1,:));
+nerve_tracking_gui(V)
 ```
