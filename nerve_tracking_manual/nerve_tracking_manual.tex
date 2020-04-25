@@ -21,7 +21,7 @@
 		\begin{tabular}{@{}r@{}} Version 0.5 \\ April 2020\end{tabular}\hrule	
 	\end{large}\par\vspace{\baselineskip}
 	
-Nerve tracking GUI is used for tracking nerves in volumetric data. The method is the same as used in the paper \emph{Three-dimensional architecture of human diabetic peripheral nerves revealed by X-ray phase contrast holographic nanotomography} by Dahlin \emph{et al.}, Scientific Reports 2020.
+Nerve tracking GUI is used for tracking nerves in volumetric data. The method has been developed for analysing the data in the paper \emph{Three-dimensional architecture of human diabetic peripheral nerves revealed by X-ray phase contrast holographic nanotomography} by Dahlin \emph{et al.}, Scientific Reports 2020.
 
 Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window (see Fig.~\ref{fig:guiscreenshot}). The results are visualized in the 3D visualization window, and can be exported and saved as .obj files (see Fig.~\ref{fig:mousenerves}).
 
@@ -45,7 +45,7 @@ The basic use of the code is: \texttt{nerve\_tracking\_gui(data)}. The format of
 		\item[(n)] Change the active \underline{n}erve to another already existing nerve. 
 		\item[(e)] \underline{E}dit the active nerve in the current slice by dragging the curve.
 		\item[(D, d + shift)] \underline{D}elete the active nerve in all slices. Cannot be undone.
-		\item[(f)] \underline{F}it the active nerve in the current slice to the image data. This function uses the active setting for edge boundary. %Sometimes good to use multiple times in the same slice.
+		\item[(f)] \underline{F}it the active nerve in the current slice to the image data. This function uses the active setting for boundary. %Sometimes good to use multiple times in the same slice.
 		\item[(c)] \underline{C}opy the active nerve from the current slice to all subsequent slices. %All subsequent slices will be modified.
 		\item[(p)] \underline{P}ropagate the active nerve from the current slice to all subsequent slices. The nerve will be copied and fitted slice-by-slice. The current slice will not be affected. This function uses the active setting for edge boundary. %All subsequent slices will be modified.
 		\item[(b)] Change the active setting for a \underline{b}oundary. Toggles between three options: `any', `bright inside', and `dark inside'.
