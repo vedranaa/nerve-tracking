@@ -32,3 +32,15 @@ Keyboard input, navigation:
 ## The suggested workflow
 
 Start by getting an overview of the data by navigating through all slices. To add a nerve, navigate to the first slice, then add the curve, fit, and propagate. Navigate through slices to validate the fit. If needed, edit the curve in a slice and propagate. Remember that propagate changes all subsequent slices, so make all edits in order -- starting with the first slice, ending with the last slice. If the fit is not satisfactory in some slice e.g. *z*, use copy to duplicate the result from an earlier slice e.g. *z-1*. You may or may not edit the curve in slice *z*. Then chose a later slice e.g. *z+1* to initiate propagation. Remember to get back to the first slice in order to add another nerve.    
+
+## Example data
+
+Example data for running the gui, and the example scrips, will be made available. In the mean time, to try the gui you can use `mri` data available in MATLAB. Note that this is far from optimal data for gui, since all background is masked to be fully black (0) and structures are not tubular. Still, you can get a reasonable segmentation of the head. 
+
+```matlab
+%% a test with matlabs build-in data
+load mri
+nerve_tracking_gui(squeeze(D(:,:,1,:)), ...
+    'regularization_propagation', [0.1,0.5],...
+    'range', -15:15, 'nr_points', 180, 'zoom_width', 130)
+```
