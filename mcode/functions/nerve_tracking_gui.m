@@ -1,5 +1,6 @@
 function nerve_tracking_gui(data,varargin)
-%NERVE_TRACKING_GUI   GUI for tracking nerves in volumetric data
+%NERVE_TRACKING_GUI   GUI for tracking nerves in volumetric data.
+%   Check https://github.com/vedranaa/NerveTracking for suggested workflow.
 %   NERVE_TRACKING_GUI(DATA)
 %   NERVE_TRACKING_GUI(DATA,Name,Value) sets one or more properties using 
 %           name-value pair arguments. Keyboard shortcuts: arrows for 
