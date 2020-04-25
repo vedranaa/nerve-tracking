@@ -28,3 +28,6 @@ Keyboard input, navigation:
   - (p) Propagate the active nerve from the current slice to all subsequent slices. The nerve will be copied and fitted slice-by-slice. The current slice will not be affected. This function uses the active setting for edge boundary. 
   - (b) Change the active setting for a boundary. Toggles between three options: *any*, *bright inside*, and *dark inside*.
   - (s) Save nerves in a .mat file named *NERVES_XY*. Overwrites previously saved nerves.
+  
+##The suggested workflow
+Start by getting an overview of the data by navigating through all slices. To add a nerve, navigate to the first slice, then add the curve, fit, and propagate. Navigate through slices to validate the fit. If needed, edit the curve in a slice and propagate. Remember that propagate changes all subsequent slices, so make all edits in order -- starting with the first slice, ending with the last slice. If the fit is not satisfactory in some slice e.g. *z*, use copy to duplicate the result from an earlier slice e.g. *z-1*. You may or may not edit the curve in slice *z*. Then chose a later slice e.g. *z+1* to initiate propagation. Remember to get back to the first slice in order to add another nerve.    
