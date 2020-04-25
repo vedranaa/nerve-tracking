@@ -43,7 +43,7 @@ load mri
 V = squeeze(D(:,:,1,:));
 nerve_tracking_gui(V)
 ```
-Still, you can get a reasonable segmentation of the head, sell bellow, but that required slightly tweaking some parameters.
+Still, you can get a reasonable segmentation of the head, see bellow, but that required slightly tweaking some parameters.
 
 ```matlab
 %% chaniging regularization, range and number of points
