@@ -35,7 +35,7 @@ Start by getting an overview of the data by navigating through all slices. To ad
 
 ## Example data
 
-Example data for running the gui, and the example scrips, will be made available later. For now, write to vand@dtu.dk for access. In the mean time, to try the gui you can use `mri` data available in MATLAB. Note that this is far from optimal data for gui, since all background is masked to be fully black (0) and structures are not tubular. 
+Example data for running the gui, and the example scrips, will be made available later. For now, write to vand@dtu.dk for access. In the mean time, to you can try running the gui on `mri` data available in MATLAB. Note that this is far from optimal data for gui, since all background is masked to be fully black and structures are not tubular. 
 
 ```matlab
 %% a test with matlabs build-in data
