@@ -20,11 +20,11 @@ Keyboard input, navigation:
   
  Keyboard input, functionality:
   - (a) Add a new nerve by placing a circle. A nerve is added to all slices. The added nerve will become the active nerve.
-		- (n) Change the active nerve to another already existing nerve. 
-		- (e) Edit the active nerve in the current slice by dragging the curve.
-		- (D, shif+d) Delete the active nerve in all slices. Cannot be undone.
-		- (f) Fit the active nerve in the current slice to the image data. This function uses the active setting for boundary. 
-		- (c) Copy the active nerve from the current slice to all subsequent slices. 
-		- (p) Propagate the active nerve from the current slice to all subsequent slices. The nerve will be copied and fitted slice-by-slice. The current slice will not be affected. This function uses the active setting for edge boundary. 
-		- (b) Change the active setting for a boundary. Toggles between three options: *any*, *bright inside*, and *dark inside'.
-		- (s) Save nerves in a .mat file named *NERVES_XY*. Overwrites previously saved nerves.
+  - (n) Change the active nerve to another already existing nerve. 
+  - (e) Edit the active nerve in the current slice by dragging the curve.
+  - (D, shif+d) Delete the active nerve in all slices. Cannot be undone.
+  - (f) Fit the active nerve in the current slice to the image data. This function uses the active setting for boundary. 
+  - (c) Copy the active nerve from the current slice to all subsequent slices. 
+  - (p) Propagate the active nerve from the current slice to all subsequent slices. The nerve will be copied and fitted slice-by-slice. The current slice will not be affected. This function uses the active setting for edge boundary. 
+  - (b) Change the active setting for a boundary. Toggles between three options: *any*, *bright inside*, and *dark inside*.
+  - (s) Save nerves in a .mat file named *NERVES_XY*. Overwrites previously saved nerves.
