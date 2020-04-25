@@ -1,4 +1,4 @@
-\documentclass[paper=a4, fontsize=10pt]{article}
+\documentclass[paper=a4, fontsize=8pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{times}
@@ -16,17 +16,18 @@
 %\addtolength{\voffset}{-0.5\extralength}
 
 \begin{document}
-	\begin{Large}\hrule height 1pt
-		\begin{tabular}{@{}l@{}} Nerve tracking GUI \\ Manual\end{tabular}\hspace{\stretch{1}}
-		\begin{tabular}{@{}r@{}} Version 1 \\ 2019\end{tabular}\hrule	
-	\end{Large}\par\vspace{\baselineskip}
+	\begin{large}\hrule height 1pt
+		\begin{tabular}{@{}l@{}} Nerve tracking GUI \\ User manual\end{tabular}\hspace{\stretch{1}}
+		\begin{tabular}{@{}r@{}} Version 0.5 \\ April 2020\end{tabular}\hrule	
+	\end{large}\par\vspace{\baselineskip}
 	
-\subsubsection*{Overview}
-Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window (see Fig.~\ref{fig:guiscreenshot}). The result can be exported and saved as .obj file (see Fig.~\ref{fig:mousenerves}).
+Nerve tracking GUI is used for tracking nerves in volumetric data. The method is the same as used in the paper \emph{Three-dimensional architecture of human diabetic peripheral nerves revealed by X-ray phase contrast holographic nanotomography} by Dahlin \emph{et al.}, Scientific Reports 2020.
 
+Nerve tracking GUI is guided trough keyboard and mouse input. Hints on the basic functionality are written, or appear, above and below the images. The most important functionality is accessed via keyboard inputs in the overview window. This is supplemented by drawing by dragging in the drawing window (see Fig.~\ref{fig:guiscreenshot}). The result can be exported and saved as .obj files (see Fig.~\ref{fig:mousenerves}).
 
-\subsubsection*{Keyboard input}
-Navigation:
+The basic use of the code is: \texttt{nerve\_tracking\_gui(data)}. The format of \texttt{data} and  optional inputs are explained in the help text in the code.
+
+\paragraph{Keyboard input.} Navigation:
 \begin{description}
 		\item[(Arrow up)] One slice up.
 		\item[(Arrow down)] One slice down.
@@ -38,30 +39,30 @@ Navigation:
 		\item[(End)] To the last slice.
 \end{description}
 
-Functionality:
+\paragraph{Keyboard input.} Functionality:
 \begin{description}
-		\item[(A)] \underline{A}dd a new nerve by placing a circle. A nerve is added to all slices. The added nerve will become the active nerve.
-		\item[(N)] Change the active \underline{n}erve to another already existing nerve. 
-		\item[(E)] \underline{E}dit the active nerve in the current slice by dragging the curve.
-		\item[(D + shift)] \underline{D}elete the active nerve in all slices. Cannot be undone.
-		\item[(F)] \underline{F}it the active nerve in the current slice to the image data. This function uses the active setting for edge boundary. %Sometimes good to use multiple times in the same slice.
-		\item[(C)] \underline{C}opy the active nerve from the current slice to all subsequent slices. %All subsequent slices will be modified.
-		\item[(P)] \underline{P}ropagate the active nerve from the current slice to all subsequent slices. The nerve will be copied and fitted slice-by-slice. The current slice will not be affected. This function uses the active setting for edge boundary. %All subsequent slices will be modified.
-		\item[(B)] Change the active setting for edge \underline{b}oundary. Toggles between three options: `dark inside', `bright inside', `any'.
-		\item[(S)] \underline{S}ave nerves in a .mat file named NERVES\_XY. Overwrites previously saved nerves.
+		\item[(a)] \underline{A}dd a new nerve by placing a circle. A nerve is added to all slices. The added nerve will become the active nerve.
+		\item[(n)] Change the active \underline{n}erve to another already existing nerve. 
+		\item[(e)] \underline{E}dit the active nerve in the current slice by dragging the curve.
+		\item[(D, d + shift)] \underline{D}elete the active nerve in all slices. Cannot be undone.
+		\item[(f)] \underline{F}it the active nerve in the current slice to the image data. This function uses the active setting for edge boundary. %Sometimes good to use multiple times in the same slice.
+		\item[(c)] \underline{C}opy the active nerve from the current slice to all subsequent slices. %All subsequent slices will be modified.
+		\item[(p)] \underline{P}ropagate the active nerve from the current slice to all subsequent slices. The nerve will be copied and fitted slice-by-slice. The current slice will not be affected. This function uses the active setting for edge boundary. %All subsequent slices will be modified.
+		\item[(b)] Change the active setting for a \underline{b}oundary. Toggles between three options: `any', `bright inside', and `dark inside'.
+		\item[(s)] \underline{S}ave nerves in a .mat file named NERVES\_XY. Overwrites previously saved nerves.
 \end{description}
 
-\subsubsection*{The suggested workflow}
-Start by getting an overview of the data by navigating through all slices. To add a nerve, navigate to the first slice, then add the curve, fit and propagate. Navigate through slices to validate the fit. If needed, edit the curve in a slice and propagate. Remember that propagate changes all subsequent slices, so make all edits in order -- starting with the first slice, ending with the last slice. If fit is not satisfactory in some slice e.g.\ $z$, use copy to duplicate the result from an earlier slice e.g.\ $z-1$. You may or may not edit the curve in slice $z$. Then chose a later slice e.g.\ $z+1$ to initiate propagation. Remember to get back to the first slice in order to add another nerve.    
+\paragraph{The suggested workflow.}
+Start by getting an overview of the data by navigating through all slices. To add a nerve, navigate to the first slice, then add the curve, fit, and propagate. Navigate through slices to validate the fit. If needed, edit the curve in a slice and propagate. Remember that propagate changes all subsequent slices, so make all edits in order -- starting with the first slice, ending with the last slice. If the fit is not satisfactory in some slice e.g.\ $z$, use copy to duplicate the result from an earlier slice e.g.\ $z-1$. You may or may not edit the curve in slice $z$. Then chose a later slice e.g.\ $z+1$ to initiate propagation. Remember to get back to the first slice in order to add another nerve.    
 
-\vspace{\stretch{1}}\noindent vand at dtu dot dk, 2019
+\vspace{\stretch{1}}\noindent vand at dtu dot dk, 2019, 2020
 
 \newpage
 	
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.9\linewidth]{images/GUI_Screenshot}
-		\caption{A screenshot of nerve tracking GUI in action. On left the oveview window, on right the drawing window and the 3D visualization window.}
+		\caption{A screenshot of the nerve tracking GUI in action. On left the oveview window, on right the drawing window and the 3D visualization window.}
 		\label{fig:guiscreenshot}
 		\vspace{3\baselineskip}
 		\includegraphics[width=\linewidth]{images/EM_mouse_meshes_screenshot}

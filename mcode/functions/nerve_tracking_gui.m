@@ -2,7 +2,8 @@ function nerve_tracking_gui(data,varargin)
 %NERVE_TRACKING_GUI   GUI for tracking nerves in volumetric data
 %   NERVE_TRACKING_GUI(DATA)
 %   NERVE_TRACKING_GUI(DATA,Name,Value) sets one or more properties using 
-%           name-value pair arguments. Keyboard shortcuts: add [a], 
+%           name-value pair arguments. Keyboard shortcuts: arrows for 
+%           slicing, home and end for first and last slice, add [a], 
 %           change nerve [n], edit [e], fit [f], propagate [p], copy [c], 
 %           delete [D], save [s], boundry [b]       
 %       DATA, volumetric data. This may be a name of a folder containing
@@ -12,12 +13,20 @@ function nerve_tracking_gui(data,varargin)
 %           'tracks', previously tracked and saved nerves from GUI. This is 
 %               an array of size NR_POINTS-by-NR_NERVES-by-NR_SLICES-by_2
 %               containing x and y coordinates of the nerve outlines.
-%           'nr_points'
-%           'z_multiplier'
-%           'zoom_width'
-%           'regularization_propagation'
-%           'regularization_drag'
-%           'range'           
+%           'nr_points', number of point along each nerve outline, defaults
+%               to 90.
+%           'z_multiplier', scaling of z axis used only for visualization,
+%               defaults to 1.
+%           'zoom_width', width of the drawing window, defaults to 100.
+%           'regularization_propagation', regularization of the curve when
+%               propagating, a vector with two numbers indicating
+%               elasticity and rigidity of the curve, defaults to [0.5,1].
+%           'regularization_drag', regularization of the curve when
+%               dragging during editing, a vector with two numbers
+%               indicatinng elasticity and rigidity, defaults to [2,10].
+%           'range', a vector defining a normal-direction search range of 
+%               the curve when propagating, needs to reflect how much 
+%               nerves move between slices, defaults to -10:0.5:10.  
 %           
 %   Author: vand@dtu.dk, 2019, 2020
 
