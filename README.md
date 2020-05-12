@@ -51,3 +51,6 @@ nerve_tracking_gui(V, 'regularization_propagation', [0.1,0.5],...
     'range', -15:15, 'nr_points', 180)
 ```
 <img src="/images/mri_screenshot.png" width="500">
+
+## Dependencies
+In our code we implemented layered surface segmentation algorithm by [Li *et al*.](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1542036&casa_token=RxkzavXcv-cAAAAA:ZxzQMjXjaoE80jZEkTCW_rZK7DA7gMgqft-Q1mUIBqLYKkV97_4gC-cd9wnWOot9OjUb28fMhBM&tag=1), and we use an [implementaton](http://pub.ist.ac.at/~vnk/software.html) of maxflow algorithm by [Boykov and Kolmogorov](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1316848&casa_token=vJ9uoOMgzrAAAAAA:24j6xA6_gyTGBnrnQQEgi2ykcxUmnadXaV0yZ0RHO4qC2wU2CKr6roYQQ55cfc-2MdQvUiIdKAY).
