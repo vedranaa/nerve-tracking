@@ -1,4 +1,4 @@
-# NerveTracking
+# Nerve Tracking
 
 Nerve tracking GUI is used for tracking nerves in volumetric data. The method has been developed for analysing the data in the article *Three-dimensional architecture of human diabetic peripheral nerves revealed by X-ray phase contrast holographic nanotomography* by Dahlin *et al.*, Scientific Reports 2020. Links: [[article]](https://www.nature.com/articles/s41598-020-64430-5?utm_source=other&utm_medium=other&utm_content=null&utm_campaign=JRCN_2_LW01_CN_SCIREP_article_paid_XMOL) [[ris]](https://www.nature.com/articles/s41598-020-64430-5.ris) [[bibtex]](https://scholar.googleusercontent.com/scholar.bib?q=info:gLdpJXLwGYEJ:scholar.google.com/&output=citation&scisdr=CgU9yQiGEPjtr1d8AGE:AAGBfm0AAAAAXrp5GGGe5_sSVMy_BtXRxpHqqbbQaJT4&scisig=AAGBfm0AAAAAXrp5GH5gJII_v2OOwA6XUp92zqapZFOj&scisf=4&ct=citation&cd=-1&hl=da).
 
@@ -31,7 +31,7 @@ Keyboard input, navigation:
 
 ## The suggested workflow
 
-Start by getting an overview of the data by navigating through all slices. To add a nerve, navigate to the first slice, then add the curve, fit, and propagate. Navigate through slices to validate the fit. If needed, edit the curve in a slice and propagate. Remember that propagate changes all subsequent slices, so make all edits in order -- starting with the first slice, ending with the last slice. If the fit is not satisfactory in some slice e.g. *z*, use copy to duplicate the result from an earlier slice e.g. *z-1*. You may or may not edit the curve in slice *z*. Then chose a later slice e.g. *z+1* to initiate propagation. Remember to get back to the first slice in order to add another nerve.    
+Start by getting an overview of the data by navigating through all slices. To add a nerve, navigate to the first slice, then add the curve, fit, and propagate. Navigate through slices to validate the fit. If needed, edit the curve in a slice and propagate. Remember that propagate changes all subsequent slices, so make all edits in order - starting with the first slice, ending with the last slice. If the fit is not satisfactory in some slice e.g. *z*, use copy to duplicate the result from an earlier slice e.g. *z-1*. You may or may not edit the curve in slice *z*. Then chose a later slice e.g. *z+1* to initiate propagation. Remember to get back to the first slice in order to add another nerve.    
 
 ## Trying the GUI
 
