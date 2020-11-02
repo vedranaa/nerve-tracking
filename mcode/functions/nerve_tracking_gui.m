@@ -2,20 +2,20 @@ function nerve_tracking_gui(data,varargin)
 %NERVE_TRACKING_GUI   GUI for tracking nerves in volumetric data.
 %   Check https://github.com/vedranaa/NerveTracking for suggested workflow.
 %   NERVE_TRACKING_GUI(DATA)
-%   NERVE_TRACKING_GUI(DATA,Name,Value) sets one or more properties using 
-%           name-value pair arguments. Keyboard shortcuts: arrows for 
-%           slicing, home and end for first and last slice, add [a], 
-%           change nerve [n], edit [e], fit [f], propagate [p], copy [c], 
-%           delete [D], save [s], boundry [b]       
+%   NERVE_TRACKING_GUI(DATA,Name,Value) sets one or more properties using
+%           name-value pair arguments. Keyboard shortcuts: arrows for
+%           slicing, home and end for first and last slice, add [a],
+%           change nerve [n], edit [e], fit [f], propagate [p], copy [c],
+%           delete [D], save [s], boundry [b]
 %       DATA, volumetric data. This may be a name of a folder containing
 %               tif images, a name of the tiff file containing stacked tif
 %               stacked images, or a 3D array.
 %       Name-Value pairs:
-%           'tracks', previously tracked and saved nerves from GUI. This is 
+%           'tracks', previously tracked and saved nerves from GUI. This is
 %               an array of size NR_POINTS-by-NR_NERVES-by-NR_SLICES-by_2
 %               containing x and y coordinates of the nerve outlines.
 %           'nr_points', number of point along each nerve outline, defaults
-%               to 90.
+%               to 90. Given tracks will be resampled if needed.
 %           'z_multiplier', scaling of z axis used only for visualization,
 %               defaults to 1.
 %           'zoom_width', width of the drawing window, defaults to 100.
@@ -25,10 +25,10 @@ function nerve_tracking_gui(data,varargin)
 %           'regularization_drag', regularization of the curve when
 %               dragging during editing, a vector with two numbers
 %               indicatinng elasticity and rigidity, defaults to [2,10].
-%           'range', a vector defining a normal-direction search range of 
-%               the curve when propagating, needs to reflect how much 
-%               nerves move between slices, defaults to -10:0.5:10.  
-%           
+%           'range', a vector defining a normal-direction search range of
+%               the curve when propagating, needs to reflect how much
+%               nerves move between slices, defaults to -10:0.5:10.
+%
 %   Author: vand@dtu.dk, 2019, 2020
 
 
@@ -42,8 +42,11 @@ else
     Y = [];
 end
 
-if isempty(X) && any(strcmpi(varargin,'NR_POINTS'))
+if any(strcmpi(varargin,'NR_POINTS'))
     nr_points = varargin{find(strcmpi(varargin,'NR_POINTS'))+1};
+    if ~isempty(X) && size(X,1)~=nr_points
+        [X,Y] = resample_nerves(X,Y,nr_points);
+    end
 else
     nr_points = 90;
 end
@@ -69,14 +72,14 @@ end
 if any(strcmpi(varargin,'REGULARIZATION_DRAG'))
     regularization_drag = varargin{find(strcmpi(varargin,'REGULARIZATION_DRAG'))+1};
 else
-   regularization_drag = [2,10];
+    regularization_drag = [2,10];
 end
 
 if any(strcmpi(varargin,'RANGE'))
     range = varargin{find(strcmpi(varargin,'RANGE'))+1};
     range = range(:);
 else
-   range = (-10:0.5:10)'; % range for surface displacement
+    range = (-10:0.5:10)'; % range for surface displacement
 end
 
 % figuring out what type of volumetric data is given
@@ -88,7 +91,7 @@ if ischar(data) % either collection of tif images in a folder or a tif stack
         disp('yep')
     else % a single stacked tif image
         nr_slices = length(imfinfo(data));
-        readslice = @(z) imread(data,'Index',z);       
+        readslice = @(z) imread(data,'Index',z);
     end
 elseif numel(size(data))==3
     nr_slices = size(data,3);
@@ -287,17 +290,14 @@ update_drawing
     function propagate_nerve
         xlabel('Propagating current nerve from current slice.')
         drawnow
-        direction{1} = CURRENT_SLICE:nr_slices;
-        direction{2} = CURRENT_SLICE:-1:1;
-        for d = 1%:2
-            for k = 2:numel(direction{d})
-                I_this = readslice(direction{d}(k));
-                F = griddedInterpolant(double(I_this),'linear');
-                S = [X(:,CURRENT_NERVE,direction{d}(k-1)),Y(:,CURRENT_NERVE,direction{d}(k-1))];
-                S = fit_one_nerve(F,S,range,B,boundry_options{CURRENT_BOUNDARY_OPTION});
-                X(:,CURRENT_NERVE,direction{d}(k)) = S(:,1);
-                Y(:,CURRENT_NERVE,direction{d}(k)) = S(:,2);
-            end
+        direction = CURRENT_SLICE:nr_slices;
+        for k = 2:numel(direction)
+            I_this = readslice(direction(k));
+            F = griddedInterpolant(double(I_this),'linear');
+            S = [X(:,CURRENT_NERVE,direction(k-1)),Y(:,CURRENT_NERVE,direction(k-1))];
+            S = fit_one_nerve(F,S,range,B,boundry_options{CURRENT_BOUNDARY_OPTION});
+            X(:,CURRENT_NERVE,direction(k)) = S(:,1);
+            Y(:,CURRENT_NERVE,direction(k)) = S(:,2);
         end
         xlabel('Propagated current nerve from current slice.')
     end
@@ -308,6 +308,21 @@ update_drawing
         X(:,CURRENT_NERVE,CURRENT_SLICE:end) = repmat(X(:,CURRENT_NERVE,CURRENT_SLICE),[1 1 nr_slices-CURRENT_SLICE+1]);
         Y(:,CURRENT_NERVE,CURRENT_SLICE:end) = repmat(Y(:,CURRENT_NERVE,CURRENT_SLICE),[1 1 nr_slices-CURRENT_SLICE+1]);
         xlabel('Copyed current nerve from current slice.')
+    end
+
+    function [X_new,Y_new] = resample_nerves(X,Y,N)
+        xlabel('Copying current nerve from current slice.')
+        X_new = zeros(N,size(X,2),size(X,3));
+        Y_new = zeros(N,size(Y,2),size(Y,3));
+        for n = 1:size(X,2)
+            for z = 1:size(X,3)
+                S = [X(:,n,z),Y(:,n,z)];
+                S_new = distribute_points(S,'number',N);
+                X_new(:,n,z) = S_new(:,1);
+                Y_new(:,n,z) = S_new(:,2);
+            end
+        end
+        
     end
 end
 
