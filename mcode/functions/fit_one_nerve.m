@@ -1,13 +1,22 @@
-function S = fit_one_nerve(F,S,range,B,direction)
+function S = fit_one_nerve(F,S,range,B,direction,sigma)
 %F - interpolant
 %S - snake
 %range - radial range
 %B - regularization matrix
 %direction - indicates dark to bright or other options
+%sigma - optional radial smoothing
+
+if nargin<6 || isempty(sigma) || sigma==0
+    f = [-1;1];
+else
+    x = (-ceil(2*sigma) : ceil(2*sigma))';
+    g = 1/(sigma*sqrt(2*pi))*exp(-x.^2/(2*sigma.^2));
+    f = x.*g/sigma.^2; % this is negative of dg
+end
 
 normals = snake_normals(S);
 unfolded = F(S(:,1)'+range*normals(:,1)',S(:,2)'+range*normals(:,2)');
-unfolded = imfilter(unfolded,[-1;1],'replicate');
+unfolded = imfilter(unfolded,f,'replicate');
 if strcmp(direction, 'dark inside')
     unfolded = -unfolded;
 elseif strcmp(direction, 'any')

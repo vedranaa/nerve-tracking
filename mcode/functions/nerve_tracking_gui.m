@@ -15,7 +15,8 @@ function nerve_tracking_gui(data,varargin)
 %               an array of size NR_POINTS-by-NR_NERVES-by-NR_SLICES-by_2
 %               containing x and y coordinates of the nerve outlines.
 %           'nr_points', number of point along each nerve outline, defaults
-%               to 90. Given tracks will be resampled if needed.
+%               to 90. If tracks are given, and track length is different
+%                from nr_points, tracks will be resampled.
 %           'z_multiplier', scaling of z axis used only for visualization,
 %               defaults to 1.
 %           'zoom_width', width of the drawing window, defaults to 100.
@@ -28,6 +29,10 @@ function nerve_tracking_gui(data,varargin)
 %           'range', a vector defining a normal-direction search range of
 %               the curve when propagating, needs to reflect how much
 %               nerves move between slices, defaults to -10:0.5:10.
+%           'boundary', an integer initial boundary option,
+%               1: 'dark inside', 2: 'any', 3: 'bright inside'.
+%           'sigma', smoothing when computing normal derivative.
+%               Defaults to 0 meaning no smoothing (difference).
 %
 %   Author: vand@dtu.dk, 2019, 2020
 
@@ -48,7 +53,11 @@ if any(strcmpi(varargin,'NR_POINTS'))
         [X,Y] = resample_nerves(X,Y,nr_points);
     end
 else
-    nr_points = 90;
+    if isempty(X)
+        nr_points = 90;
+    else
+        nr_points = size(X,1);
+    end
 end
 
 if any(strcmpi(varargin,'Z_MULTIPLIER'))
@@ -82,13 +91,38 @@ else
     range = (-10:0.5:10)'; % range for surface displacement
 end
 
+if any(strcmpi(varargin,'BOUNDARY'))
+    boundary = varargin{find(strcmpi(varargin,'BOUNDARY'))+1};
+    if isnumeric(boundary)
+        CURRENT_BOUNDARY_OPTION = boundary;
+    else
+        if strcmp(boundary, 'dark inside')
+            CURRENT_BOUNDARY_OPTION = 1;
+        elseif strcmp(boundary, 'any')
+            CURRENT_BOUNDARY_OPTION = 2;
+        elseif strcmp(boundary, 'bright inside')
+            CURRENT_BOUNDARY_OPTION = 3;
+        else
+            warning('Unknown direction option')
+            CURRENT_BOUNDARY_OPTION = 2;
+        end
+    end
+else
+    CURRENT_BOUNDARY_OPTION = 2; % default initial boundary option is 'any'
+end
+
+if any(strcmpi(varargin,'SIGMA'))
+    sigma = varargin{find(strcmpi(varargin,'SIGMA'))+1};
+else
+    sigma = 0; % defaults to no smoothing (difference filter [-1 1])
+end
+
 % figuring out what type of volumetric data is given
 if ischar(data) % either collection of tif images in a folder or a tif stack
     if isfolder(data) % folder of tif images
         image_list = dir([data,'/*.tif']);
         nr_slices = length(image_list);
         readslice = @(z) imread([data,'/',image_list(z).name]);
-        disp('yep')
     else % a single stacked tif image
         nr_slices = length(imfinfo(data));
         readslice = @(z) imread(data,'Index',z);
@@ -105,7 +139,6 @@ NR_NERVES = size(X,2);
 
 CURRENT_NERVE = [];
 boundry_options = {'dark inside', 'any', 'bright inside'};
-CURRENT_BOUNDARY_OPTION = 2; % initial boundary option is 'any'
 B = regularization_matrix(nr_points,regularization_propagation(1),regularization_propagation(2)); % regularization matrix
 title_string = 'Keyboard: add [a], change nerve [n], edit [e], fit [f], propagate [p], copy [c], Delete [D], save [s], boundry [b]';
 
@@ -214,7 +247,7 @@ update_drawing
 
     function update_surf
         figure(fig_surf), clf
-        surf_nerves([size(CURRENT_IMAGE),nr_slices],X,Y,z_multiplier)
+        surf_nerves([size(CURRENT_IMAGE),nr_slices],X,Y,z_multiplier);
         drawnow
     end
 
@@ -246,7 +279,11 @@ update_drawing
         drawnow
         [y,x,~] = ginput(1);
         dist = (y-mean(Y(:,:,CURRENT_SLICE))).^2+(x-mean(X(:,:,CURRENT_SLICE))).^2;
-        CURRENT_NERVE = find(dist==min(dist),1);
+        if dist<2*margin
+            CURRENT_NERVE = find(dist==min(dist),1);
+        else
+            CURRENT_NERVE = [];
+        end
         xlabel(['Changed current nerve to nerve ',num2str(CURRENT_NERVE),'.'])
     end
 
@@ -277,14 +314,16 @@ update_drawing
     end
 
     function fit_nerve
-        xlabel('Fitting current nerve in current slice.')
-        drawnow
-        F = griddedInterpolant(double(CURRENT_IMAGE),'linear'); % interpolant in a new image
-        S = [X(:,CURRENT_NERVE,CURRENT_SLICE),Y(:,CURRENT_NERVE,CURRENT_SLICE)];
-        S = fit_one_nerve(F,S,range,B,boundry_options{CURRENT_BOUNDARY_OPTION});
-        X(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,1);
-        Y(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,2);
-        xlabel('Fitted current nerve in current slice.')
+        if ~isempty(CURRENT_NERVE)
+            xlabel('Fitting current nerve in current slice.')
+            drawnow
+            F = griddedInterpolant(double(CURRENT_IMAGE),'linear'); % interpolant in a new image
+            S = [X(:,CURRENT_NERVE,CURRENT_SLICE),Y(:,CURRENT_NERVE,CURRENT_SLICE)];
+            S = fit_one_nerve(F,S,range,B,boundry_options{CURRENT_BOUNDARY_OPTION},sigma);
+            X(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,1);
+            Y(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,2);
+            xlabel('Fitted current nerve in current slice.')
+        end
     end
 
     function propagate_nerve
@@ -295,7 +334,7 @@ update_drawing
             I_this = readslice(direction(k));
             F = griddedInterpolant(double(I_this),'linear');
             S = [X(:,CURRENT_NERVE,direction(k-1)),Y(:,CURRENT_NERVE,direction(k-1))];
-            S = fit_one_nerve(F,S,range,B,boundry_options{CURRENT_BOUNDARY_OPTION});
+            S = fit_one_nerve(F,S,range,B,boundry_options{CURRENT_BOUNDARY_OPTION},sigma);
             X(:,CURRENT_NERVE,direction(k)) = S(:,1);
             Y(:,CURRENT_NERVE,direction(k)) = S(:,2);
         end

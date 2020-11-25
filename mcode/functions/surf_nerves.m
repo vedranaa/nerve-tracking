@@ -1,4 +1,4 @@
-function surf_nerves(dim,X,Y,z_multiplier)
+function m = surf_nerves(dim,X,Y,z_multiplier)
 % Helping function for drawing 3D visualization of nerves for  
 % nerve_tracking_gui.
 
