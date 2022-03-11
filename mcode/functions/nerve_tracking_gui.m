@@ -278,8 +278,9 @@ update_drawing
         xlabel('Changing nerve. Click at the nerve to change to.')
         drawnow
         [y,x,~] = ginput(1);
-        dist = (y-mean(Y(:,:,CURRENT_SLICE))).^2+(x-mean(X(:,:,CURRENT_SLICE))).^2;
-        if dist<2*margin
+        dist = sqrt((y-mean(Y(:,:,CURRENT_SLICE))).^2+(x-mean(X(:,:,CURRENT_SLICE))).^2);
+        disp(margin)
+        if min(dist)<2*margin
             CURRENT_NERVE = find(dist==min(dist),1);
         else
             CURRENT_NERVE = [];
@@ -288,19 +289,21 @@ update_drawing
     end
 
     function edit_nerve
-        xlabel('Editing current nerve in current slice. Use drawing window.')
-        drawnow
-        S = [Y(:,CURRENT_NERVE,CURRENT_SLICE),X(:,CURRENT_NERVE,CURRENT_SLICE)];
-        y = mean(Y(:,CURRENT_NERVE,CURRENT_SLICE));
-        x = mean(X(:,CURRENT_NERVE,CURRENT_SLICE));
-        figure(fig_edit)
-        imagesc(CURRENT_IMAGE), colormap gray, axis image,
-        axis([y-margin,y+margin,x-margin,x+margin]), hold on
-        S = edit_nerve_gui(fig_edit,S,regularization_drag);
-        X(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,2);
-        Y(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,1);
-        figure(fig_main)
-        xlabel('Edited current nerve in current slice.')
+        if ~isempty(CURRENT_NERVE)
+            xlabel('Editing current nerve in current slice. Use drawing window.')
+            drawnow
+            S = [Y(:,CURRENT_NERVE,CURRENT_SLICE),X(:,CURRENT_NERVE,CURRENT_SLICE)];
+            y = mean(Y(:,CURRENT_NERVE,CURRENT_SLICE));
+            x = mean(X(:,CURRENT_NERVE,CURRENT_SLICE));
+            figure(fig_edit)
+            imagesc(CURRENT_IMAGE), colormap gray, axis image,
+            axis([y-margin,y+margin,x-margin,x+margin]), hold on
+            S = edit_nerve_gui(fig_edit,S,regularization_drag);
+            X(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,2);
+            Y(:,CURRENT_NERVE,CURRENT_SLICE) = S(:,1);
+            figure(fig_main)
+            xlabel('Edited current nerve in current slice.')
+        end
     end
 
     function delete_nerve

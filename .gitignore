@@ -10,3 +10,8 @@
 *.synctex.gz
 *.toc
 nerve_tracking_manual/nerve_tracking_manual.pdf
+*.obj
+*.mat
+*.mtl
+*.asv
+mcode/preparing_data.m
