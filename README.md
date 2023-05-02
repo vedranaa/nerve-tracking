@@ -54,7 +54,7 @@ nerve_tracking_gui(V, 'regularization_propagation', [0.1,0.5],...
 
 ## Tracking peripheral nerves
 
-To test the gui on the more appropriate data, we you can download a downscaled cut-out of peripheral nerves data [here](https://files.dtu.dk/u/ywCf2UuAn-XZAJ_b/nerves_part.tiff?l).
+To test the gui on the more appropriate data, we you can download a downscaled cut-out of peripheral nerves data [here](https://qim.compute.dtu.dk/data-repository/InSegt_data/3D/nerves_part.tiff).
 Write to vand@dtu.dk if you have problems accessing the data. Default parameters should be appropriate for this data, so you only need to provide the gui with the filename (including the path, if you placed the data elsewhere).
 
 ```matlab
